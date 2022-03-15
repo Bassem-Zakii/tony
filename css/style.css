@@ -338,58 +338,6 @@ main .carousel .carousel-wrap .carousel-content .content-box .content-info p {
   padding-right: 5px;
   overflow-y: auto;
   height: 300px;
-  scrollbar-width: thin;
-  scrollbar-color: #2d343f #475264;
-}
-
-main .carousel .carousel-wrap .carousel-content .content-box .content-info p::-webkit-scrollbar {
-  width: 1.45vw;
-  height: 1vh;
-}
-
-main .carousel .carousel-wrap .carousel-content .content-box .content-info p::-webkit-scrollbar-track {
-  background-color: #475264;
-  border-radius: 20px;
-  margin-block: 4px;
-}
-
-main .carousel .carousel-wrap .carousel-content .content-box .content-info p::-webkit-scrollbar-thumb {
-  background-color: #2d343f;
-  border-radius: 20px;
-}
-
-main .carousel .carousel-wrap .carousel-content .content-box .content-info p::-webkit-scrollbar-thumb:hover {
-  background-color: #222;
-}
-
-main .carousel .carousel-wrap .carousel-content .content-box .content-info p::-webkit-scrollbar-button {
-  width: 20px;
-  height: 20px;
-  background-color: #37404e;
-  cursor: pointer;
-  border-radius: 50px;
-}
-
-main .carousel .carousel-wrap .carousel-content .content-box .content-info p ::-webkit-scrollbar-button:single-button:vertical:decrement {
-  height: 14px;
-  width: 16px;
-  background-position: center 4px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255, 255, 255)'><polygon points='50,00 0,50 100,50'/></svg>");
-}
-
-main .carousel .carousel-wrap .carousel-content .content-box .content-info p ::-webkit-scrollbar-button:single-button:vertical:decrement:active {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255, 255, 255)'><polygon points='50,00 0,50 100,50'/></svg>");
-}
-
-main .carousel .carousel-wrap .carousel-content .content-box .content-info p ::-webkit-scrollbar-button:single-button:vertical:increment {
-  height: 14px;
-  width: 16px;
-  background-position: center 5px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,0 100,0 50,50'/></svg>");
-}
-
-main .carousel .carousel-wrap .carousel-content .content-box .content-info p ::-webkit-scrollbar-button:single-button:vertical:increment:active {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,0 100,0 50,50'/></svg>");
 }
 
 main .carousel .thumbnails {
@@ -407,9 +355,10 @@ main .carousel .thumbnails {
 main .carousel .thumbnails .thumbnails-wrap {
   overflow: hidden;
   height: 180px;
-  border: 2px solid #000;
+  border: 6px solid #2d2d2e;
   position: relative;
   margin: 0 20px;
+  background-color: #2d2d2e;
 }
 
 main .carousel .thumbnails .thumbnails-wrap:hover .thumbnails-scroll ul {
@@ -447,14 +396,15 @@ main .carousel .thumbnails .thumbnails-wrap .thumbnails-scroll ul {
 main .carousel .thumbnails .thumbnails-wrap .thumbnails-scroll ul li {
   position: relative;
   overflow: hidden;
-  min-width: 200px;
+  min-width: 193px;
   cursor: pointer;
+  margin: 0 3px;
 }
 
 main .carousel .thumbnails .thumbnails-wrap .thumbnails-scroll ul li img {
-  min-width: 200px;
-  max-width: 200px;
-  height: 180px;
+  max-width: 193px;
+  min-width: 193px;
+  height: 168px;
   -o-object-fit: cover;
      object-fit: cover;
   display: block;
