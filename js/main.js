@@ -42,10 +42,6 @@ html.addEventListener("click", (e) => {
 
 // carousel
 
-const thumbnailsScroll = document.querySelector(
-  ".thumbnails-wrap .thumbnails-scroll"
-);
-
 const thumbnailsListWrap = document.querySelector(".thumbnails-wrap ul");
 
 // // carousel data
@@ -55,7 +51,7 @@ const allData = [
     id: 1,
     img: "content1.jpg",
     title: "Link 1",
-    info: "Lorem ipsum dolor sit amet consectetur adipisicing elit. A repellendus facilis impedit error aperiam aut enim rerum ad ipsum, neque inventore eaque harum, optio nisi ",
+    info: "Lorem ipsum dolor sit amet consectetur adipisicing elit. A repellendus facilis impedit error aperiam aut enim rerum ad ipsum, neque inventore eaque harum, optio nisi asperiores, placeat id! Perspiciatis, dolores! Lorem ipsum dolor sit amet consectetur adipisicing elit. A repellendus facilis impedit error aperiam aut enim rerum ad ipsum, neque inventore eaque harum, optio nisi asperiores, placeat id! Perspiciatis, dolores! Lorem ipsum dolor sit amet consectetur adipisicing elit. A repellendus facilis impedit error aperiam aut enim rerum ad ipsum, neque inventore eaque harum, optio nisi asperiores, placeat id! Perspiciatis, dolores! Lorem ipsum dolor sit amet consectetur adipisicing elit. A repellendus facilis impedit error aperiam aut enim rerum ad ipsum, neque inventore eaque harum, optio nisi asperiores, placeat id! Perspiciatis, dolores! Lorem ipsum dolor sit amet consectetur adipisicing elit. A repellendus facilis impedit error aperiam aut enim rerum ad ipsum, neque inventore eaque harum, optio nisi asperiores, placeat id! Perspiciatis, dolores! Lorem ipsum dolor sit amet consectetur adipisicing elit. A repellendus facilis impedit error aperiam aut enim rerum ad ipsum, neque inventore eaque harum, optio nisi asperiores, placeat id! Perspiciatis, dolores! ",
   },
   {
     id: 2,
@@ -147,13 +143,13 @@ thumbnailsAfterClone.forEach((lists) => {
       list.classList.remove("active");
     });
 
-    doorLift.classList.add("active");
-    doorRight.classList.add("active");
-
     setTimeout(() => {
       doorLift.classList.remove("active");
       doorRight.classList.remove("active");
-    }, 1000);
+    }, 800);
+
+    doorLift.classList.add("active");
+    doorRight.classList.add("active");
 
     this.classList.add("active");
 
@@ -166,6 +162,14 @@ thumbnailsAfterClone.forEach((lists) => {
         contentimg.setAttribute("alt", data.img);
         contentTitle.textContent = data.title;
         contentInfo.textContent = data.info;
+        contentimg.style.opacity = 0;
+        contentTitle.style.opacity = 0;
+        contentInfo.style.opacity = 0;
+        setTimeout(function () {
+          contentimg.style.opacity = 1;
+          contentTitle.style.opacity = 1;
+          contentInfo.style.opacity = 1;
+        }, 800);
       }
     }
 
@@ -179,42 +183,4 @@ thumbnailsAfterClone.forEach((lists) => {
       }
     }
   });
-});
-
-// drag move scroll with click mouse poitner
-
-let isDown = false;
-let startX;
-let scrollLeft;
-
-thumbnailsScroll.addEventListener("mousedown", (e) => {
-  isDown = true;
-  thumbnailsScroll.classList.add("active");
-  startX = e.pageX - thumbnailsScroll.offsetLeft;
-  scrollLeft = thumbnailsScroll.scrollLeft;
-});
-
-thumbnailsScroll.addEventListener("mouseleave", () => {
-  isDown = false;
-  thumbnailsScroll.classList.remove("active");
-});
-
-thumbnailsScroll.addEventListener("mouseup", () => {
-  isDown = false;
-  thumbnailsScroll.classList.remove("active");
-});
-
-thumbnailsScroll.addEventListener("mousemove", (e) => {
-  if (!isDown) return;
-  e.preventDefault();
-  const x = e.pageX - thumbnailsScroll.offsetLeft;
-  const walk = x - startX;
-  thumbnailsScroll.scrollLeft = scrollLeft - walk;
-});
-
-// scroll horizontally with mouse wheel
-
-thumbnailsScroll.addEventListener("wheel", (e) => {
-  e.preventDefault();
-  thumbnailsScroll.scrollLeft += e.deltaY;
 });

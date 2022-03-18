@@ -242,6 +242,8 @@ main {
             padding: 60px;
             img {
               box-shadow: 0 0 13px -4px #000;
+              height: 100%;
+              object-fit: cover;
             }
           }
           .content-info {
@@ -254,55 +256,44 @@ main {
             }
             p {
               margin-top: 10px;
-              padding-right: 5px;
+              padding-right: 10px;
+              overflow: hidden;
               overflow-y: auto;
               height: 300px;
-              // scrollbar-width: thin;
-              // scrollbar-color: #2d343f #475264;
-              // &::-webkit-scrollbar {
-              //   width: 1.45vw;
-              //   height: 1vh;
-              // }
-              // &::-webkit-scrollbar-track {
-              //   background-color: #475264;
-              //   border-radius: 20px;
-              //   margin-block: 4px;
-              // }
-              // &::-webkit-scrollbar-thumb {
-              //   background-color: #2d343f;
-              //   border-radius: 20px;
-              //   &:hover {
-              //     background-color: #222;
-              //   }
-              // }
-              // &::-webkit-scrollbar-button {
-              //   width: 20px;
-              //   height: 20px;
-              //   background-color: #37404e;
-              //   cursor: pointer;
-              //   border-radius: 50px;
-              // }
-              // ::-webkit-scrollbar-button:single-button:vertical:decrement {
-              //   height: 14px;
-              //   width: 16px;
-              //   background-position: center 4px;
-              //   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255, 255, 255)'><polygon points='50,00 0,50 100,50'/></svg>");
-              // }
+              scrollbar-width: thin;
+              scrollbar-color: #2e3440 rgba(72, 85, 104, 0.8);
 
-              // ::-webkit-scrollbar-button:single-button:vertical:decrement:active {
-              //   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255, 255, 255)'><polygon points='50,00 0,50 100,50'/></svg>");
-              // }
+              &::-webkit-scrollbar {
+                width: 18px;
+              }
 
-              // ::-webkit-scrollbar-button:single-button:vertical:increment {
-              //   height: 14px;
-              //   width: 16px;
-              //   background-position: center 5px;
-              //   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,0 100,0 50,50'/></svg>");
-              // }
+              &::-webkit-scrollbar-track {
+                background: rgba(72, 85, 104, 0.8);
+                border-radius: 50px;
+              }
 
-              // ::-webkit-scrollbar-button:single-button:vertical:increment:active {
-              //   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,0 100,0 50,50'/></svg>");
-              // }
+              &::-webkit-scrollbar-thumb {
+                background: #2e3440;
+                border-radius: 50px;
+              }
+
+              &::-webkit-scrollbar-button:vertical:decrement {
+                width: 18px;
+                height: 18px;
+                border-radius: 50px;
+                background: url("../img/up-arrow.png") no-repeat center center
+                  #3e4857;
+                background-size: 8px;
+              }
+
+              &::-webkit-scrollbar-button:vertical:increment {
+                width: 18px;
+                height: 18px;
+                border-radius: 50px;
+                background: url("../img/down-arrow.png") no-repeat center center
+                  #3e4857;
+                background-size: 8px;
+              }
             }
           }
         }
@@ -318,70 +309,58 @@ main {
         overflow: hidden;
         height: 180px;
         border: 6px solid #2d2d2e;
-        position: relative;
         margin: 0 20px;
         background-color: #2d2d2e;
-        &:hover .thumbnails-scroll ul {
+        &:hover ul {
           animation-play-state: paused;
         }
-        .thumbnails-scroll {
-          max-width: calc(200px * 4);
-          overflow: hidden;
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 100%;
-          &.active ul li {
-            cursor: grabbing;
-          }
-          ul {
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease-in-out;
-            animation: scroll 20s linear infinite;
-            li {
-              position: relative;
-              overflow: hidden;
+        ul {
+          display: flex;
+          align-items: center;
+          animation: scroll 9s linear infinite;
+          li {
+            position: relative;
+            overflow: hidden;
+            max-width: 193px;
+            min-width: 193px;
+            cursor: pointer;
+            margin: 0 3px;
+            img {
+              max-width: 193px;
               min-width: 193px;
-              cursor: pointer;
-              margin: 0 3px;
-              img {
-                max-width: 193px;
-                min-width: 193px;
-                height: 168px;
-                object-fit: cover;
-                display: block;
-                &::selection {
-                  background: transparent;
-                }
+              height: 168px;
+              object-fit: cover;
+              display: block;
+              &::selection {
+                background: transparent;
               }
+            }
+            span {
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: -100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background-color: rgba(0, 0, 0, 0.5);
+              color: #fff;
+              padding: 3px 2px;
+              font-size: 1rem;
+              overflow: hidden;
+              visibility: hidden;
+              transition: all 0.3s ease-in-out;
+              &::selection {
+                text-shadow: none;
+                background: transparent;
+                color: inherit;
+              }
+            }
+            &:hover,
+            &.active {
               span {
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: -100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: rgba(0, 0, 0, 0.5);
-                color: #fff;
-                padding: 3px 2px;
-                font-size: 1rem;
-                overflow: hidden;
-                visibility: hidden;
-                transition: all 0.3s ease-in-out;
-                &::selection {
-                  text-shadow: none;
-                  background: transparent;
-                  color: inherit;
-                }
-              }
-              &:hover,
-              &.active {
-                span {
-                  bottom: 0;
-                  visibility: visible;
-                }
+                bottom: 0;
+                visibility: visible;
               }
             }
           }
@@ -393,7 +372,7 @@ main {
           transform: translateX(0);
         }
         100% {
-          transform: translateX(calc(-200px * 8));
+          transform: translateX(calc(-199px * 8));
         }
       }
       .carousel-btns {
@@ -438,8 +417,10 @@ main {
         .carousel-content {
           .content-box {
             grid-template-columns: 1fr;
+            height: auto;
             .content-img {
               padding: 30px;
+              height: auto;
             }
           }
         }
@@ -461,11 +442,26 @@ main {
         }
       }
     }
-    @media (max-width: 992px) {
+    @media (min-width: 769px) and (max-width: 992px) {
       .carousel-wrap {
         .carousel-content {
           .content-box {
+            height: 450px;
             .content-img {
+              height: auto;
+              padding: 30px;
+            }
+          }
+        }
+      }
+    }
+    @media (min-width: 993px) and (max-width: 1399px) {
+      .carousel-wrap {
+        .carousel-content {
+          .content-box {
+            height: 500px;
+            .content-img {
+              height: 500px;
               padding: 30px;
             }
           }
@@ -476,6 +472,10 @@ main {
       .carousel-wrap {
         .carousel-content {
           .content-box {
+            height: 650px;
+            .content-img {
+              height: 650px;
+            }
             .content-info {
               p {
                 height: 440px;
