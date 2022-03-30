@@ -154,11 +154,12 @@ header {
 // main
 
 main {
-  // carousel
+  // slider
 
-  .carousel {
+  .slider {
     padding: 50px 0;
-    .carousel-wrap {
+    min-height: calc(100vh - 150px);
+    .slider-wrap {
       background-color: #cdcbcd;
       .bord {
         background-color: #5d6e87;
@@ -167,16 +168,10 @@ main {
         border-bottom: 2px solid #000;
         display: block;
       }
-      .carousel-content {
+      .slider-content {
         padding: 15px 10px 15px;
         .content-box {
           background-color: #5d6e87;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          justify-content: center;
-          align-items: center;
-          gap: 10px;
-          border: 2px solid #000;
           position: relative;
           overflow: hidden;
           .door-left,
@@ -237,256 +232,167 @@ main {
               left: 50%;
             }
           }
-
-          .content-img {
-            padding: 60px;
-            img {
-              box-shadow: 0 0 13px -4px #000;
-              height: 100%;
-              object-fit: cover;
-            }
-          }
-          .content-info {
-            color: #fff;
-            padding: 10px 10px 20px;
+          .content-wrap {
             overflow: hidden;
-            h3 {
-              font-size: 1.8rem;
-              font-style: italic;
-            }
-            p {
-              margin-top: 10px;
-              padding-right: 10px;
-              overflow: hidden;
-              overflow-y: auto;
-              height: 300px;
-              scrollbar-width: thin;
-              scrollbar-color: #2e3440 rgba(72, 85, 104, 0.8);
-
-              &::-webkit-scrollbar {
-                width: 18px;
-              }
-
-              &::-webkit-scrollbar-track {
-                background: rgba(72, 85, 104, 0.8);
-                border-radius: 50px;
-              }
-
-              &::-webkit-scrollbar-thumb {
-                background: #2e3440;
-                border-radius: 50px;
-              }
-
-              &::-webkit-scrollbar-button:vertical:decrement {
-                width: 18px;
-                height: 18px;
-                border-radius: 50px;
-                background: url("../img/up-arrow.png") no-repeat center center
-                  #3e4857;
-                background-size: 8px;
-              }
-
-              &::-webkit-scrollbar-button:vertical:increment {
-                width: 18px;
-                height: 18px;
-                border-radius: 50px;
-                background: url("../img/down-arrow.png") no-repeat center center
-                  #3e4857;
-                background-size: 8px;
-              }
-            }
-          }
-        }
-      }
-    }
-    .thumbnails {
-      margin-top: 50px;
-      display: grid;
-      justify-content: space-between;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      .thumbnails-wrap {
-        overflow: hidden;
-        height: 180px;
-        border: 6px solid #2d2d2e;
-        margin: 0 20px;
-        background-color: #2d2d2e;
-        &:hover ul {
-          animation-play-state: paused;
-        }
-        ul {
-          display: flex;
-          align-items: center;
-          animation: scroll 9s linear infinite;
-          li {
+            // height: 550px;
             position: relative;
-            overflow: hidden;
-            max-width: 193px;
-            min-width: 193px;
-            cursor: pointer;
-            margin: 0 3px;
-            img {
-              max-width: 193px;
-              min-width: 193px;
-              height: 168px;
-              object-fit: cover;
-              display: block;
-              &::selection {
-                background: transparent;
-              }
-            }
-            span {
+            .content-scroll {
               position: absolute;
+              top: 0;
               left: 0;
               right: 0;
-              bottom: -100%;
-              display: flex;
-              align-items: center;
+              z-index: -1;
+            }
+            .content-data {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
               justify-content: center;
-              background-color: rgba(0, 0, 0, 0.5);
-              color: #fff;
-              padding: 3px 2px;
-              font-size: 1rem;
+              align-items: center;
+              align-content: center;
+              gap: 10px;
+              border: 2px solid #000;
+              position: sticky;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              z-index: 5;
               overflow: hidden;
-              visibility: hidden;
-              transition: all 0.3s ease-in-out;
-              &::selection {
-                text-shadow: none;
-                background: transparent;
-                color: inherit;
+              height: 550px;
+              .content-img {
+                padding: 60px;
+                // height: 550px;
+                img {
+                  box-shadow: 0 0 13px -4px #000;
+                  height: 100%;
+                  object-fit: cover;
+                }
               }
-            }
-            &:hover,
-            &.active {
-              span {
-                bottom: 0;
-                visibility: visible;
-              }
-            }
-          }
-        }
-      }
+              .content-info {
+                color: #fff;
+                padding: 10px 10px 20px;
+                overflow: hidden;
+                h3 {
+                  font-size: 1.8rem;
+                  font-style: italic;
+                }
+                p {
+                  margin-top: 10px;
+                  padding-right: 10px;
+                  overflow: hidden;
+                  overflow-y: auto;
+                  height: 300px;
+                  scrollbar-width: thin;
+                  scrollbar-color: #2e3440 rgba(72, 85, 104, 0.8);
 
-      @keyframes scroll {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(calc(-199px * 8));
-        }
-      }
-      .carousel-btns {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-end;
-        margin: 0 20px;
-        padding: 5px;
-        button {
-          margin: 6px 0;
-          text-transform: uppercase;
-          font-size: 1rem;
-          background-color: transparent;
-          display: flex;
-          align-items: center;
-          white-space: nowrap;
-          span {
-            display: block;
-            width: 40px;
-            height: 40px;
-            background-color: #5d6e87;
-            border-radius: 50px;
-            margin-left: 6px;
-            margin-left: 6px;
-            box-shadow: inset -3px -3px 5px -2px #000;
-            border-top: 4px groove #6c7d91;
-            border-right: 4px ridge #6c7d91;
-            border-bottom: 4px ridge #6c7d91;
-            border-left: 4px groove#6c7d91;
-            transition: all 0.3s ease-in-out;
-          }
-          &:hover span {
-            background-color: #3bd83e;
-            box-shadow: none;
+                  &::-webkit-scrollbar {
+                    width: 18px;
+                  }
+
+                  &::-webkit-scrollbar-track {
+                    background: rgba(72, 85, 104, 0.8);
+                    border-radius: 50px;
+                  }
+
+                  &::-webkit-scrollbar-thumb {
+                    background: #2e3440;
+                    border-radius: 50px;
+                  }
+
+                  &::-webkit-scrollbar-button:vertical:decrement {
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 50px;
+                    background: url("../img/up-arrow.png") no-repeat center
+                      center #3e4857;
+                    background-size: 8px;
+                  }
+
+                  &::-webkit-scrollbar-button:vertical:increment {
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 50px;
+                    background: url("../img/down-arrow.png") no-repeat center
+                      center #3e4857;
+                    background-size: 8px;
+                  }
+                }
+              }
+            }
           }
         }
       }
     }
     @media (max-width: 768px) {
-      .carousel-wrap {
-        .carousel-content {
-          .content-box {
-            grid-template-columns: 1fr;
-            height: auto;
-            .content-img {
-              padding: 30px;
-              height: auto;
+      & {
+        min-height: calc(100vh - 103px);
+        .slider-wrap {
+          .slider-content {
+            .content-box {
+              .content-wrap {
+                height: auto;
+                .content-data {
+                  grid-template-columns: 1fr;
+                  height: auto;
+                  .content-img {
+                    padding: 30px;
+                    height: auto;
+                  }
+                }
+              }
             }
-          }
-        }
-      }
-      .thumbnails {
-        grid-template-columns: 1fr;
-        .thumbnails-wrap {
-          margin: 0 15px;
-        }
-        .carousel-btns {
-          flex-direction: row;
-          justify-content: center;
-          margin: 10px 15px 0;
-          gap: 20px;
-          flex-wrap: wrap;
-          button {
-            margin: 0;
           }
         }
       }
     }
     @media (min-width: 769px) and (max-width: 992px) {
-      .carousel-wrap {
-        .carousel-content {
+      .slider-wrap {
+        .slider-content {
           .content-box {
-            height: 450px;
-            .content-img {
-              height: auto;
-              padding: 30px;
+            .content-wrap {
+              .content-data {
+                height: 450px;
+                .content-img {
+                  height: auto;
+                  padding: 30px;
+                }
+              }
             }
           }
         }
       }
     }
     @media (min-width: 993px) and (max-width: 1399px) {
-      .carousel-wrap {
-        .carousel-content {
+      .slider-wrap {
+        .slider-content {
           .content-box {
-            height: 500px;
-            .content-img {
-              height: 500px;
-              padding: 30px;
+            .content-wrap {
+              .content-data {
+                height: 450px;
+                .content-img {
+                  padding: 30px;
+                }
+              }
             }
           }
         }
       }
     }
     @media (min-width: 1400px) {
-      .carousel-wrap {
-        .carousel-content {
+      .slider-wrap {
+        .slider-content {
           .content-box {
-            height: 650px;
-            .content-img {
-              height: 650px;
-            }
-            .content-info {
-              p {
-                height: 440px;
+            .content-wrap {
+              .content-data {
+                height: 650px;
+                .content-info {
+                  p {
+                    height: 440px;
+                  }
+                }
               }
             }
           }
-        }
-      }
-      .thumbnails {
-        .thumbnails-wrap {
-          width: 800px;
         }
       }
     }
@@ -494,3 +400,13 @@ main {
 }
 
 // main
+
+footer {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  color: #fff;
+  font-size: 0.9rem;
+}

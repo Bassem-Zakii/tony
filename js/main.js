@@ -8,7 +8,6 @@ const navlinks = document.querySelectorAll("header nav .link");
 const navBtn = document.querySelector("header .nav-btn");
 const navList = document.querySelector("header nav .links");
 
-let cg = console.log;
 
 // toggle and add active class to navbar sublinks and his parent
 
@@ -40,11 +39,9 @@ html.addEventListener("click", (e) => {
   }
 });
 
-// carousel
+// slider
 
-const thumbnailsListWrap = document.querySelector(".thumbnails-wrap ul");
-
-// // carousel data
+// // slider data
 
 const allData = [
   {
@@ -99,88 +96,82 @@ const allData = [
 
 // dynamic data
 
-for (const data of allData) {
-  thumbnailsListWrap.innerHTML += `<li data-id="${data.id}">
-  <img src="img/${data.img}" alt="${data.img}" draggable="false" />
-  <span>${data.title}</span></li>`;
-}
+const contentimg = document.querySelector(".slider .content-box img");
+const contentBox = document.querySelector(".slider .content-box .content-wrap");
+const contentBoxList = document.querySelector(".slider .content-data");
 
-const thumbnailsFirstElement = document.querySelector(".thumbnails-wrap ul li");
-
-thumbnailsFirstElement.classList.add("active");
-
-// clone thumbnails item
-
-let clones = [];
-
-let thumbnailsList = [...document.querySelectorAll(".thumbnails-wrap ul li")];
-
-thumbnailsList.forEach((list) => {
-  let clone = list.cloneNode(true);
-  clone.classList.add("clone");
-  thumbnailsListWrap.appendChild(clone);
-  clones.push(clone);
-});
-
-const thumbnailsAfterClone = document.querySelectorAll(
-  ".thumbnails-wrap ul li"
+const contentScroll = document.querySelector(
+  ".slider .content-box .content-scroll"
 );
 
-const contentimg = document.querySelector(".carousel .content-box img");
-const contentTitle = document.querySelector(".carousel .content-box h3");
-const contentInfo = document.querySelector(".carousel .content-box p");
-const doorLift = document.querySelector(".carousel .content-box .door-left");
-const doorRight = document.querySelector(".carousel .content-box .door-right");
+const contentTitle = document.querySelector(".slider .content-box h3");
+const contentInfo = document.querySelector(".slider .content-box p");
+const doorLift = document.querySelector(".slider .content-box .door-left");
+const doorRight = document.querySelector(".slider .content-box .door-right");
 
 contentimg.setAttribute("src", `img/${allData[0].img}`);
 contentimg.setAttribute("alt", allData[0].img);
 contentTitle.textContent = allData[0].title;
 contentInfo.textContent = allData[0].info;
 
-thumbnailsAfterClone.forEach((lists) => {
-  lists.addEventListener("click", function () {
-    thumbnailsAfterClone.forEach((list) => {
-      list.classList.remove("active");
-    });
+contentBox.scrollTo(0, 0);
 
-    setTimeout(() => {
-      doorLift.classList.remove("active");
-      doorRight.classList.remove("active");
+let wheelScroll = false;
+
+contentBox.addEventListener("wheel", function (e) {
+  e.preventDefault();
+  contentScroll.style.height = contentBoxList.offsetHeight * 2 + "px";
+  const contentBoxHeight = contentBoxList.offsetHeight;
+  contentBox.scrollTop += e.deltaY;
+  if (!wheelScroll) {
+    wheelScroll = true;
+
+    if (contentBox.scrollTop === 0) {
+      contentBox.scrollTo(0, contentBoxHeight);
+      const last = allData.pop();
+      allData.unshift(last);
+      contentimg.style.opacity = 0;
+      contentTitle.style.opacity = 0;
+      contentInfo.style.opacity = 0;
+      setTimeout(function () {
+        contentimg.style.opacity = 1;
+        contentTitle.style.opacity = 1;
+        contentInfo.style.opacity = 1;
+      }, 800);
+      setTimeout(() => {
+        doorLift.classList.remove("active");
+        doorRight.classList.remove("active");
+      }, 800);
+
+      doorLift.classList.add("active");
+      doorRight.classList.add("active");
+    } else if (contentBox.scrollTop === contentBoxHeight) {
+      contentBox.scrollTo(0, 0);
+      const first = allData.shift();
+      allData.push(first);
+      contentimg.style.opacity = 0;
+      contentTitle.style.opacity = 0;
+      contentInfo.style.opacity = 0;
+      setTimeout(function () {
+        contentimg.style.opacity = 1;
+        contentTitle.style.opacity = 1;
+        contentInfo.style.opacity = 1;
+      }, 800);
+      setTimeout(() => {
+        doorLift.classList.remove("active");
+        doorRight.classList.remove("active");
+      }, 800);
+
+      doorLift.classList.add("active");
+      doorRight.classList.add("active");
+    }
+    setTimeout(function () {
+      wheelScroll = false;
     }, 800);
+  }
 
-    doorLift.classList.add("active");
-    doorRight.classList.add("active");
-
-    this.classList.add("active");
-
-    for (const data of allData) {
-      if (
-        this.classList.contains("active") &&
-        this.getAttribute("data-id") == data.id
-      ) {
-        contentimg.setAttribute("src", `img/${data.img}`);
-        contentimg.setAttribute("alt", data.img);
-        contentTitle.textContent = data.title;
-        contentInfo.textContent = data.info;
-        contentimg.style.opacity = 0;
-        contentTitle.style.opacity = 0;
-        contentInfo.style.opacity = 0;
-        setTimeout(function () {
-          contentimg.style.opacity = 1;
-          contentTitle.style.opacity = 1;
-          contentInfo.style.opacity = 1;
-        }, 800);
-      }
-    }
-
-    for (let i = 0; i < thumbnailsAfterClone.length; i++) {
-      const el = thumbnailsAfterClone[i];
-      if (
-        this.classList.contains("active") &&
-        this.getAttribute("data-id") === el.getAttribute("data-id")
-      ) {
-        el.classList.add("active");
-      }
-    }
-  });
+  contentimg.setAttribute("src", `img/${allData[0].img}`);
+  contentimg.setAttribute("alt", allData[0].img);
+  contentTitle.textContent = allData[0].title;
+  contentInfo.textContent = allData[0].info;
 });
