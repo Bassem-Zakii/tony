@@ -21,6 +21,19 @@ subLinks.forEach((links) => {
   });
 });
 
+// main link preventDefault
+
+const mainLinks = document.querySelectorAll("header nav .main-link");
+
+for (let i = 0; i < mainLinks.length; i++) {
+  const el = mainLinks[i];
+  el.addEventListener("click", (e) => {
+    e.preventDefault();
+  });
+}
+
+// the button for open and close navbar
+
 navBtn.addEventListener("click", () => {
   navBtn.classList.toggle("active");
   if (navBtn.classList.contains("active")) {
@@ -40,9 +53,20 @@ html.addEventListener("click", (e) => {
   }
 });
 
-// slider
+// logo
 
-// // slider data
+const navLogo = document.querySelector("header .logo a");
+
+navLogo.addEventListener("click", (e) => {
+  e.preventDefault();
+  doorsAnim();
+});
+
+// carousel
+
+const thumbnailsListWrap = document.querySelector(".thumbnails-wrap ul");
+
+// // carousel data
 
 const allData = [
   {
@@ -97,69 +121,85 @@ const allData = [
 
 // dynamic data
 
-const contentimg = document.querySelector(".slider .content-box img");
-const contentBox = document.querySelector(".slider .content-box .content-wrap");
-const contentBoxList = document.querySelector(".slider .content-data");
-const contentParagraph = document.querySelector(".slider .content-info p");
+for (const data of allData) {
+  thumbnailsListWrap.innerHTML += `<li data-id="${data.id}">
+  <img src="img/${data.img}" alt="${data.img}" draggable="false" />
+  <span>${data.title}</span></li>`;
+}
 
-const contentScroll = document.querySelector(
-  ".slider .content-box .content-scroll"
+const thumbnailsFirstElement = document.querySelector(".thumbnails-wrap ul li");
+
+thumbnailsFirstElement.classList.add("active");
+
+// clone thumbnails item
+
+let clones = [];
+
+let thumbnailsList = [...document.querySelectorAll(".thumbnails-wrap ul li")];
+
+thumbnailsList.forEach((list) => {
+  let clone = list.cloneNode(true);
+  clone.classList.add("clone");
+  thumbnailsListWrap.appendChild(clone);
+  clones.push(clone);
+});
+
+const thumbnailsAfterClone = document.querySelectorAll(
+  ".thumbnails-wrap ul li"
 );
 
-const contentTitle = document.querySelector(".slider .content-box h3");
-const contentInfo = document.querySelector(".slider .content-box p");
-const doorLift = document.querySelector(".slider .content-box .door-left");
-const doorRight = document.querySelector(".slider .content-box .door-right");
+const contentimg = document.querySelector(".carousel .content-box img");
+const contentTitle = document.querySelector(".carousel .content-box h3");
+const contentInfo = document.querySelector(".carousel .content-box p");
+const doorLift = document.querySelector(".carousel .content-box .door-left");
+const doorRight = document.querySelector(".carousel .content-box .door-right");
 
 contentimg.setAttribute("src", `img/${allData[0].img}`);
 contentimg.setAttribute("alt", allData[0].img);
 contentTitle.textContent = allData[0].title;
 contentInfo.textContent = allData[0].info;
 
-contentBox.scrollTo(0, 0);
+thumbnailsAfterClone.forEach((lists) => {
+  lists.addEventListener("click", function () {
+    thumbnailsAfterClone.forEach((list) => {
+      list.classList.remove("active");
+    });
 
-let wheelScroll = false;
+    this.classList.add("active");
 
-contentBox.addEventListener("wheel", function (e) {
-  e.preventDefault();
-  contentScroll.style.height = contentBoxList.offsetHeight * 2 + "px";
-  const contentBoxHeight = contentBoxList.offsetHeight;
-  contentBox.scrollTop += e.deltaY;
-  if (!wheelScroll) {
-    wheelScroll = true;
-
-    if (contentBox.scrollTop === 0) {
-      contentBox.scrollTo(0, contentBoxHeight);
-      const last = allData.pop();
-      allData.unshift(last);
-      doorsAnim();
-    } else if (contentBox.scrollTop === contentBoxHeight) {
-      contentBox.scrollTo(0, 0);
-      const first = allData.shift();
-      allData.push(first);
-      doorsAnim();
+    for (const data of allData) {
+      if (
+        this.classList.contains("active") &&
+        this.getAttribute("data-id") == data.id
+      ) {
+        contentimg.setAttribute("src", `img/${data.img}`);
+        contentimg.setAttribute("alt", data.img);
+        contentTitle.textContent = data.title;
+        contentInfo.textContent = data.info;
+        doorsAnim();
+      }
     }
-    setTimeout(function () {
-      wheelScroll = false;
-    }, 800);
-  }
 
-  contentimg.setAttribute("src", `img/${allData[0].img}`);
-  contentimg.setAttribute("alt", allData[0].img);
-  contentTitle.textContent = allData[0].title;
-  contentInfo.textContent = allData[0].info;
+    for (let i = 0; i < thumbnailsAfterClone.length; i++) {
+      const el = thumbnailsAfterClone[i];
+      if (
+        this.classList.contains("active") &&
+        this.getAttribute("data-id") === el.getAttribute("data-id")
+      ) {
+        el.classList.add("active");
+      }
+    }
+  });
 });
 
 function doorsAnim() {
   contentimg.style.opacity = 0;
   contentTitle.style.opacity = 0;
   contentInfo.style.opacity = 0;
-  setTimeout(function () {
+  setTimeout(() => {
     contentimg.style.opacity = 1;
     contentTitle.style.opacity = 1;
     contentInfo.style.opacity = 1;
-  }, 800);
-  setTimeout(() => {
     doorLift.classList.remove("active");
     doorRight.classList.remove("active");
   }, 800);
