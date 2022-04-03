@@ -8,13 +8,14 @@ const navlinks = document.querySelectorAll("header nav .link");
 const navBtn = document.querySelector("header .nav-btn");
 const navList = document.querySelector("header nav .links");
 
-
 // toggle and add active class to navbar sublinks and his parent
 
 subLinks.forEach((links) => {
-  links.addEventListener("click", function () {
+  links.addEventListener("click", function (e) {
+    e.preventDefault();
     subLinks.forEach((link) => link.classList.remove("active"));
     navlinks.forEach((link) => link.classList.remove("active"));
+    doorsAnim();
     this.classList.add("active");
     this.parentNode.parentNode.classList.add("active");
   });
@@ -130,40 +131,12 @@ contentBox.addEventListener("wheel", function (e) {
       contentBox.scrollTo(0, contentBoxHeight);
       const last = allData.pop();
       allData.unshift(last);
-      contentimg.style.opacity = 0;
-      contentTitle.style.opacity = 0;
-      contentInfo.style.opacity = 0;
-      setTimeout(function () {
-        contentimg.style.opacity = 1;
-        contentTitle.style.opacity = 1;
-        contentInfo.style.opacity = 1;
-      }, 800);
-      setTimeout(() => {
-        doorLift.classList.remove("active");
-        doorRight.classList.remove("active");
-      }, 800);
-
-      doorLift.classList.add("active");
-      doorRight.classList.add("active");
+      doorsAnim();
     } else if (contentBox.scrollTop === contentBoxHeight) {
       contentBox.scrollTo(0, 0);
       const first = allData.shift();
       allData.push(first);
-      contentimg.style.opacity = 0;
-      contentTitle.style.opacity = 0;
-      contentInfo.style.opacity = 0;
-      setTimeout(function () {
-        contentimg.style.opacity = 1;
-        contentTitle.style.opacity = 1;
-        contentInfo.style.opacity = 1;
-      }, 800);
-      setTimeout(() => {
-        doorLift.classList.remove("active");
-        doorRight.classList.remove("active");
-      }, 800);
-
-      doorLift.classList.add("active");
-      doorRight.classList.add("active");
+      doorsAnim();
     }
     setTimeout(function () {
       wheelScroll = false;
@@ -175,3 +148,21 @@ contentBox.addEventListener("wheel", function (e) {
   contentTitle.textContent = allData[0].title;
   contentInfo.textContent = allData[0].info;
 });
+
+function doorsAnim() {
+  contentimg.style.opacity = 0;
+  contentTitle.style.opacity = 0;
+  contentInfo.style.opacity = 0;
+  setTimeout(function () {
+    contentimg.style.opacity = 1;
+    contentTitle.style.opacity = 1;
+    contentInfo.style.opacity = 1;
+  }, 800);
+  setTimeout(() => {
+    doorLift.classList.remove("active");
+    doorRight.classList.remove("active");
+  }, 800);
+
+  doorLift.classList.add("active");
+  doorRight.classList.add("active");
+}
