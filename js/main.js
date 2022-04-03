@@ -100,6 +100,7 @@ const allData = [
 const contentimg = document.querySelector(".slider .content-box img");
 const contentBox = document.querySelector(".slider .content-box .content-wrap");
 const contentBoxList = document.querySelector(".slider .content-data");
+const contentParagraph = document.querySelector(".slider .content-info p");
 
 const contentScroll = document.querySelector(
   ".slider .content-box .content-scroll"

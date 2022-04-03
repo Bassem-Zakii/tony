@@ -322,17 +322,17 @@ main {
                 display: block;
                 position: absolute;
                 bottom: 10px;
-                left: 50%;
+                left: 49%;
                 z-index: 555;
                 transform: translateX(-50%);
                 animation: up-down-icon 0.6s linear infinite;
               }
               @keyframes up-down-icon {
                 0% {
-                  transform: translate(-50%, 9px);
+                  transform: translate(-50%, 8px);
                 }
                 100% {
-                  transform: translate(-50%, -10px);
+                  transform: translate(-50%, -8px);
                 }
               }
             }
@@ -352,13 +352,15 @@ main {
                   grid-template-columns: 1fr;
                   height: auto;
                   .content-img {
-                    padding: 30px;
+                    padding: 20px 20px 10px;
                     height: auto;
                   }
                   .scroll-icon {
-                    transform: translateY(-50%);
-                    top: 50%;
-                    left: 14px;
+                    position: static;
+                    margin-left: 15px;
+                  }
+                  .content-info {
+                    padding: 0px 10px 20px;
                   }
                 }
               }
