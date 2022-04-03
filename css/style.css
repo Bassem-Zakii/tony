@@ -399,7 +399,8 @@ main .carousel .thumbnails .thumbnails-wrap {
   background-color: #2d2d2e;
 }
 
-main .carousel .thumbnails .thumbnails-wrap:hover ul {
+main .carousel .thumbnails .thumbnails-wrap:hover ul,
+main .carousel .thumbnails .thumbnails-wrap:active ul {
   -webkit-animation-play-state: paused;
           animation-play-state: paused;
 }

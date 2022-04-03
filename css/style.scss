@@ -313,7 +313,8 @@ main {
         border: 6px solid #2d2d2e;
         margin: 0 20px;
         background-color: #2d2d2e;
-        &:hover ul {
+        &:hover ul,
+        &:active ul {
           animation-play-state: paused;
         }
         ul {
