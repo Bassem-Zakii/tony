@@ -140,7 +140,7 @@ contentimg.setAttribute("alt", allData[0].img);
 contentTitle.textContent = allData[0].title;
 contentInfo.textContent = allData[0].info;
 
-contentScroll.scrollTo(0, 3);
+
 
 window.addEventListener("load", () => {
   const contentBoxHeight = contentBoxList.offsetHeight;
@@ -153,6 +153,7 @@ window.addEventListener("load", () => {
     contentBoxList.style.height = contentBoxList.offsetHeight + "px";
   }
 
+  contentScroll.scrollTo(0, 5);
 
   contentScroll.addEventListener("scroll", doScroll);
 
@@ -173,7 +174,6 @@ window.addEventListener("load", () => {
     if (scrolling === 0) {
       contentScroll.removeEventListener("scroll", doScroll);
       contentScroll.scrollTo(0, contentBoxHeight - 5);
-      // contentScroll.style.overflowY = "hidden";
       let last = allData.pop();
       allData.unshift(last);
       doorsAnim();
@@ -186,7 +186,6 @@ window.addEventListener("load", () => {
     } else if (scrolling >= contentBoxHeight + 1) {
       contentScroll.removeEventListener("scroll", doScroll);
       contentScroll.scrollTo(0, 5);
-      // contentScroll.style.overflowY = "hidden";
       const first = allData.shift();
       allData.push(first);
       doorsAnim();
