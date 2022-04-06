@@ -153,22 +153,16 @@ window.addEventListener("load", () => {
     contentBoxList.style.height = contentBoxList.offsetHeight + "px";
   }
 
-  // contentBoxList.style.height = contentBoxList.offsetHeight + "px";
-
-  console.log(contentBox.offsetHeight + " content wrap");
-  console.log(srcollHeight.offsetHeight + " span");
-  console.log(contentScroll.offsetHeight + " content-scroll");
-  console.log(contentBoxList.offsetHeight + " content-data");
 
   contentScroll.addEventListener("scroll", doScroll);
+
   window.addEventListener("resize", windowWidth);
 
   function windowWidth() {
-    console.log(window.innerWidth);
     contentBox.style.height = contentBoxList.offsetHeight + "px";
     srcollHeight.style.height = contentBoxList.offsetHeight * 2 + "px";
     contentScroll.style.height = contentBoxList.offsetHeight + "px";
-    // contentBoxList.style.height = contentBoxList.offsetHeight + "px";
+    contentBoxList.style.height = null;
     if (window.innerWidth <= 768) {
       contentBoxList.style.height = contentBoxList.offsetHeight + "px";
     }
@@ -177,37 +171,31 @@ window.addEventListener("load", () => {
   function doScroll() {
     let scrolling = this.scrollTop;
     if (scrolling === 0) {
-      console.log(scrolling);
       contentScroll.removeEventListener("scroll", doScroll);
       contentScroll.scrollTo(0, contentBoxHeight - 5);
       contentScroll.style.overflowY = "hidden";
       let last = allData.pop();
       allData.unshift(last);
       doorsAnim();
-      console.log("up");
 
       setTimeout(function () {
         contentScroll.addEventListener("scroll", doScroll);
         contentScroll.style.overflowY = "auto";
         contentScroll.scrollTo(0, contentBoxHeight - 5);
-        console.log("remove up");
       }, 2000);
     } else if (scrolling >= contentBoxHeight + 1) {
-      console.log(scrolling);
       contentScroll.removeEventListener("scroll", doScroll);
       contentScroll.scrollTo(0, 5);
       contentScroll.style.overflowY = "hidden";
       const first = allData.shift();
       allData.push(first);
       doorsAnim();
-      console.log("down");
 
       setTimeout(function () {
         contentScroll.addEventListener("scroll", doScroll);
         contentScroll.style.overflowY = "auto";
         contentScroll.scrollTo(0, 5);
-        console.log("remove down");
-      }, 2000);
+      }, 1800);
     }
 
     contentimg.setAttribute("src", `img/${allData[0].img}`);
@@ -216,7 +204,6 @@ window.addEventListener("load", () => {
     contentInfo.textContent = allData[0].info;
   }
 
-  // console.log(stopScroll);
 
   function doorsAnim() {
     contentimg.style.opacity = 0;

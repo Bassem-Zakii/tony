@@ -242,7 +242,18 @@ main {
               right: 0;
               z-index: 0;
               overflow-y: auto;
-              // scroll-behavior: smooth;
+              scrollbar-width: thin;
+              &::-webkit-scrollbar {
+                width: 0.3vw;
+              }
+              &::-webkit-scrollbar-track {
+                background: rgba(72, 85, 104, 0.8);
+                border-radius: 50px;
+              }
+              &::-webkit-scrollbar-thumb {
+                background: #2e3440;
+                border-radius: 50px;
+              }
               span {
                 display: block;
               }
@@ -287,16 +298,13 @@ main {
                   height: 300px;
                   scrollbar-width: thin;
                   scrollbar-color: #2e3440 rgba(72, 85, 104, 0.8);
-
                   &::-webkit-scrollbar {
                     width: 18px;
                   }
-
                   &::-webkit-scrollbar-track {
                     background: rgba(72, 85, 104, 0.8);
                     border-radius: 50px;
                   }
-
                   &::-webkit-scrollbar-thumb {
                     background: #2e3440;
                     border-radius: 50px;
