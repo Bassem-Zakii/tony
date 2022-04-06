@@ -241,7 +241,11 @@ main {
               left: 0;
               right: 0;
               z-index: 0;
-              overflow: auto;
+              overflow-y: auto;
+              // scroll-behavior: smooth;
+              span {
+                display: block;
+              }
             }
             .content-data {
               display: grid;
@@ -326,6 +330,7 @@ main {
                 z-index: 555;
                 transform: translateX(-50%);
                 animation: up-down-icon 0.6s linear infinite;
+                height: 40px;
               }
               @keyframes up-down-icon {
                 0% {

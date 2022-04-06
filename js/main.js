@@ -119,17 +119,19 @@ const allData = [
 
 // dynamic data
 
-const contentimg = document.querySelector(".slider .content-box img");
+const contentimg = document.querySelector(
+  ".slider .content-box .content-img img"
+);
+const contentTitle = document.querySelector(".slider .content-box h3");
+const contentInfo = document.querySelector(".slider .content-box p");
+
 const contentBox = document.querySelector(".slider .content-box .content-wrap");
 const contentBoxList = document.querySelector(".slider .content-data");
-const contentParagraph = document.querySelector(".slider .content-info p");
-
 const contentScroll = document.querySelector(
   ".slider .content-box .content-scroll"
 );
+const srcollHeight = document.querySelector(".slider .content-scroll span");
 
-const contentTitle = document.querySelector(".slider .content-box h3");
-const contentInfo = document.querySelector(".slider .content-box p");
 const doorLift = document.querySelector(".slider .content-box .door-left");
 const doorRight = document.querySelector(".slider .content-box .door-right");
 
@@ -138,65 +140,97 @@ contentimg.setAttribute("alt", allData[0].img);
 contentTitle.textContent = allData[0].title;
 contentInfo.textContent = allData[0].info;
 
-contentBox.scrollTo(0, 0);
+contentScroll.scrollTo(0, 0);
 
-let wheelScroll = false;
-
-contentBox.addEventListener("wheel", sliderWheel);
-contentBox.addEventListener("touchmove", sliderWheel);
-
-function sliderWheel(e) {
-  e.preventDefault();
-  console.log("start");
-  contentScroll.style.height = contentBoxList.offsetHeight * 2 + "px";
+window.addEventListener("load", () => {
   const contentBoxHeight = contentBoxList.offsetHeight;
-  contentBox.scrollTop += e.deltaY;
-  if (!wheelScroll) {
-    wheelScroll = true;
+  contentBox.style.height = contentBoxList.offsetHeight + "px";
 
-    if (contentBox.scrollTop === 0) {
-      contentBox.scrollTo(0, contentBoxHeight);
-      const last = allData.pop();
-      allData.unshift(last);
-      console.log("up");
-      doorsAnim();
-    } else if (contentBox.scrollTop === contentBoxHeight) {
-      contentBox.scrollTo(0, 0);
-      const first = allData.shift();
-      allData.push(first);
-      console.log("down");
-      doorsAnim();
-    }
-    setTimeout(() => {
-      wheelScroll = false;
-    }, 800);
+  srcollHeight.style.height = contentBoxList.offsetHeight * 2 + "px";
+  contentScroll.style.height = contentBoxList.offsetHeight + "px";
+
+  if (window.innerWidth <= 768) {
+    contentBoxList.style.height = contentBoxList.offsetHeight + "px";
   }
 
-  contentimg.setAttribute("src", `img/${allData[0].img}`);
-  contentimg.setAttribute("alt", allData[0].img);
-  contentTitle.textContent = allData[0].title;
-  contentInfo.textContent = allData[0].info;
-}
+  // contentBoxList.style.height = contentBoxList.offsetHeight + "px";
 
-contentParagraph.addEventListener("mouseover", () => {
-  contentBox.removeEventListener("wheel", sliderWheel);
+  console.log(contentBox.offsetHeight + " content wrap");
+  console.log(srcollHeight.offsetHeight + " span");
+  console.log(contentScroll.offsetHeight + " content-scroll");
+  console.log(contentBoxList.offsetHeight + " content-data");
+
+  contentScroll.addEventListener("scroll", doScroll);
+  window.addEventListener("resize", windowWidth);
+
+  function windowWidth() {
+    console.log(window.innerWidth);
+    contentBox.style.height = contentBoxList.offsetHeight + "px";
+    srcollHeight.style.height = contentBoxList.offsetHeight * 2 + "px";
+    contentScroll.style.height = contentBoxList.offsetHeight + "px";
+    // contentBoxList.style.height = contentBoxList.offsetHeight + "px";
+    if (window.innerWidth <= 768) {
+      contentBoxList.style.height = contentBoxList.offsetHeight + "px";
+    }
+  }
+
+  function doScroll() {
+    let scrolling = this.scrollTop;
+    if (scrolling === 0) {
+      console.log(scrolling);
+      contentScroll.removeEventListener("scroll", doScroll);
+      contentScroll.scrollTo(0, contentBoxHeight - 5);
+      contentScroll.style.overflowY = "hidden";
+      let last = allData.pop();
+      allData.unshift(last);
+      doorsAnim();
+      console.log("up");
+
+      setTimeout(function () {
+        contentScroll.addEventListener("scroll", doScroll);
+        contentScroll.style.overflowY = "auto";
+        contentScroll.scrollTo(0, contentBoxHeight - 5);
+        console.log("remove up");
+      }, 2000);
+    } else if (scrolling >= contentBoxHeight + 1) {
+      console.log(scrolling);
+      contentScroll.removeEventListener("scroll", doScroll);
+      contentScroll.scrollTo(0, 5);
+      contentScroll.style.overflowY = "hidden";
+      const first = allData.shift();
+      allData.push(first);
+      doorsAnim();
+      console.log("down");
+
+      setTimeout(function () {
+        contentScroll.addEventListener("scroll", doScroll);
+        contentScroll.style.overflowY = "auto";
+        contentScroll.scrollTo(0, 5);
+        console.log("remove down");
+      }, 2000);
+    }
+
+    contentimg.setAttribute("src", `img/${allData[0].img}`);
+    contentimg.setAttribute("alt", allData[0].img);
+    contentTitle.textContent = allData[0].title;
+    contentInfo.textContent = allData[0].info;
+  }
+
+  // console.log(stopScroll);
+
+  function doorsAnim() {
+    contentimg.style.opacity = 0;
+    contentTitle.style.opacity = 0;
+    contentInfo.style.opacity = 0;
+    setTimeout(() => {
+      contentimg.style.opacity = 1;
+      contentTitle.style.opacity = 1;
+      contentInfo.style.opacity = 1;
+      doorLift.classList.remove("active");
+      doorRight.classList.remove("active");
+    }, 800);
+
+    doorLift.classList.add("active");
+    doorRight.classList.add("active");
+  }
 });
-contentParagraph.addEventListener("mouseleave", () => {
-  contentBox.addEventListener("wheel", sliderWheel);
-});
-
-function doorsAnim() {
-  contentimg.style.opacity = 0;
-  contentTitle.style.opacity = 0;
-  contentInfo.style.opacity = 0;
-  setTimeout(() => {
-    contentimg.style.opacity = 1;
-    contentTitle.style.opacity = 1;
-    contentInfo.style.opacity = 1;
-    doorLift.classList.remove("active");
-    doorRight.classList.remove("active");
-  }, 800);
-
-  doorLift.classList.add("active");
-  doorRight.classList.add("active");
-}
