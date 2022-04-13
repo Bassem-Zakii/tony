@@ -36,6 +36,7 @@ for (let i = 0; i < mainLinks.length; i++) {
 
 navBtn.addEventListener("click", () => {
   navBtn.classList.toggle("active");
+  navBtn.classList.toggle("nav-btn-anim");
   if (navBtn.classList.contains("active")) {
     navList.classList.add("active");
   } else {
@@ -49,6 +50,7 @@ html.addEventListener("click", (e) => {
   const header = e.target.closest("header");
   if (!header) {
     navBtn.classList.remove("active");
+    navBtn.classList.remove("nav-btn-anim");
     navList.classList.remove("active");
   }
 });

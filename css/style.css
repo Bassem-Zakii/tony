@@ -116,8 +116,10 @@ header .wrapper nav .links .link a {
   white-space: nowrap;
 }
 
-header .wrapper nav .links .link:hover a, header .wrapper nav .links .link.active a {
-  background-color: rgba(0, 0, 0, 0.6);
+header .wrapper nav .links .link:hover > a,
+header .wrapper nav .links .link.active > a {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #000;
 }
 
 header .wrapper nav .links .link .sublinks {
@@ -136,7 +138,8 @@ header .wrapper nav .links .link .sublinks .sublink a {
 }
 
 header .wrapper nav .links .link .sublinks .sublink:hover a, header .wrapper nav .links .link .sublinks .sublink.active a {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #000;
 }
 
 header .wrapper nav .links .link:hover .sublinks {
@@ -171,6 +174,33 @@ header .wrapper .logo {
   }
   header .wrapper nav .nav-btn:hover span, header .wrapper nav .nav-btn.active span {
     background-color: rgba(0, 0, 0, 0.5);
+  }
+  header .wrapper nav .nav-btn.nav-btn-anim {
+    -webkit-animation: navBtnAnim 1s 1;
+            animation: navBtnAnim 1s 1;
+  }
+  header .wrapper nav .nav-btn.nav-btn-anim span {
+    background-color: rgba(255, 18, 18, 0.5);
+  }
+  @-webkit-keyframes navBtnAnim {
+    0% {
+      -webkit-transform: rotateX(0);
+              transform: rotateX(0);
+    }
+    100% {
+      -webkit-transform: rotateX(360deg);
+              transform: rotateX(360deg);
+    }
+  }
+  @keyframes navBtnAnim {
+    0% {
+      -webkit-transform: rotateX(0);
+              transform: rotateX(0);
+    }
+    100% {
+      -webkit-transform: rotateX(360deg);
+              transform: rotateX(360deg);
+    }
   }
   header .wrapper nav .links {
     position: absolute;
@@ -382,8 +412,40 @@ main .slider .first-wrap .second-wrap .content-wrap .content-info-wrap h3 {
 
 main .slider .first-wrap .second-wrap .content-wrap .content-info-wrap p {
   height: 275px;
-  overflow: scroll;
+  overflow-y: scroll;
   padding: 10px;
+  scrollbar-color: #8e8e8e #121212;
+}
+
+main .slider .first-wrap .second-wrap .content-wrap .content-info-wrap p::-webkit-scrollbar {
+  width: 12px;
+}
+
+main .slider .first-wrap .second-wrap .content-wrap .content-info-wrap p::-webkit-scrollbar-track {
+  background: #121212;
+  border-radius: 50px;
+  padding: 2px;
+}
+
+main .slider .first-wrap .second-wrap .content-wrap .content-info-wrap p::-webkit-scrollbar-thumb {
+  background: #8e8e8e;
+  border-radius: 50px;
+}
+
+main .slider .first-wrap .second-wrap .content-wrap .content-info-wrap p::-webkit-scrollbar-button:vertical:decrement {
+  width: 12px;
+  height: 12px;
+  border-radius: 50px;
+  background: url("../img/up-arrow.png") no-repeat center center #121212;
+  background-size: 6px;
+}
+
+main .slider .first-wrap .second-wrap .content-wrap .content-info-wrap p::-webkit-scrollbar-button:vertical:increment {
+  width: 12px;
+  height: 12px;
+  border-radius: 50px;
+  background: url("../img/down-arrow.png") no-repeat center center #121212;
+  background-size: 6px;
 }
 
 @media (max-width: 768px) {
